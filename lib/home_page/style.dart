@@ -20,5 +20,10 @@ TextStyle kHeading2 = TextStyle(
 
 TextStyle kcategoryname1 =
     TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kwhiteCOlor);
+TextStyle kproductname = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: kwhiteCOlor,
+    letterSpacing: -1);
 TextStyle kcategoryname2 =
     TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kprimaryColor);

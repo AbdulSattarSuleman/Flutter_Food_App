@@ -20,6 +20,13 @@ class HomeScreen extends StatelessWidget {
       'Wrap',
       'SHrimp',
     ];
+    List _productName = [
+      'Original Fried Shrimp',
+      'Spicy Chicken Noodles',
+      'Fried Shrimp',
+      'Chicken Noodles',
+      'Original Fried Shrimp',
+    ];
     List _productPrice = [
       6.9,
       7.9,
@@ -33,7 +40,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             // 1. Header
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -80,7 +87,7 @@ class HomeScreen extends StatelessWidget {
             ),
             // 3. Search Bar
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: TextField(
                 decoration: InputDecoration(
                     // contentPadding: const EdgeInsets.all(10),
@@ -106,7 +113,7 @@ class HomeScreen extends StatelessWidget {
             ),
             // 5. Category SLider
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 10),
               child: Row(
                 children: [
                   Chip(
@@ -155,24 +162,92 @@ class HomeScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 20, top: 10),
               child: SizedBox(
-                height: 150,
+                height: 200,
                 child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    // physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return SizedBox(
                         width: MediaQuery.of(context).size.width * 0.4,
-                        height: 100,
+                        height: 110,
                         child: Stack(
                           children: [
+                            Positioned(
+                              bottom: 0,
+                              child: Container(
+                                alignment: Alignment.bottomCenter,
+                                padding: EdgeInsets.only(left: 10),
+                                child: Stack(
+                                  children: [
+                                    Positioned(
+                                      top: 34,
+                                      left: 0,
+                                      child: Text(
+                                        _productName[index],
+                                        overflow: TextOverflow.ellipsis,
+                                        style: kproductname,
+                                      ),
+                                    ),
+                                    Positioned(
+                                        top: 60,
+                                        left: 0,
+                                        child: Text(_categoryName[index])),
+                                    Positioned(
+                                      bottom: 0,
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.star,
+                                            color: ksecondaryColor,
+                                            size: 14,
+                                          ),
+                                          Icon(
+                                            Icons.star,
+                                            color: ksecondaryColor,
+                                            size: 14,
+                                          ),
+                                          Icon(
+                                            Icons.star,
+                                            color: ksecondaryColor,
+                                            size: 14,
+                                          ),
+                                          Icon(
+                                            Icons.star,
+                                            color: ksecondaryColor,
+                                            size: 14,
+                                          ),
+                                          Icon(
+                                            Icons.star_half_sharp,
+                                            color: ksecondaryColor,
+                                            size: 14,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                    color: kprimaryColor,
+                                    borderRadius: BorderRadius.circular(10)),
+                              ),
+                            ),
                             // productImages border
-                            CircleAvatar(
-                              radius: 70,
-                              backgroundColor: kprimaryColor,
-                              child: CircleAvatar(
-                                radius: 67,
-                                backgroundImage: AssetImage(_categoryImages[0]),
+                            Positioned(
+                              top: 0,
+                              left: 10,
+                              child: Center(
+                                child: CircleAvatar(
+                                  radius: 70,
+                                  backgroundColor: kprimaryColor,
+                                  child: CircleAvatar(
+                                    radius: 67,
+                                    backgroundImage:
+                                        AssetImage(_categoryImages[index]),
+                                  ),
+                                ),
                               ),
                             ),
                             Positioned(
@@ -187,32 +262,143 @@ class HomeScreen extends StatelessWidget {
                                         fontSize: 17,
                                       ),
                                       children: [
-                                        TextSpan(text: '${_productPrice[0]}')
+                                        TextSpan(
+                                            text: '\$ ${_productPrice[index]}')
                                       ]),
                                 ),
                               ),
                             ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.3,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: kprimaryColor,
-                                  borderRadius: BorderRadius.circular(10)),
-                            )
                           ],
                         ),
                       );
                     },
                     separatorBuilder: (context, index) {
-                      return SizedBox(
+                      return const SizedBox(
                         width: 10,
                       );
                     },
-                    itemCount: 3),
+                    itemCount: _productPrice.length),
+              ),
+            ),
+            // 7. Category Name Other Food
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 20, 10, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RichText(
+                    text: TextSpan(style: kHeading1, children: [
+                      const TextSpan(text: "Other "),
+                      TextSpan(text: "Foods", style: kHeading2)
+                    ]),
+                  ),
+                  Text(
+                    'See More >',
+                    style: TextStyle(
+                      color: kprimaryColor,
+                      fontSize: 20,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            // 8. Other Food Product Slider
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: SizedBox(
+                height: 100,
+                child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 2.0,
+                        child: Stack(
+                          children: [
+                            Container(
+                              height: 100,
+                              width: MediaQuery.of(context).size.width * 0.4,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                  ),
+                                  image: DecorationImage(
+                                    image: AssetImage(_categoryImages[index]),
+                                    fit: BoxFit.fill,
+                                  )),
+                            ),
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: CircleAvatar(
+                                backgroundColor: kprimaryColor,
+                                radius: 30,
+                                child: RichText(
+                                  text: TextSpan(
+                                      style: TextStyle(
+                                        color: kprimaryColor,
+                                        fontSize: 17,
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                            text: '\$ ',
+                                            style: TextStyle(
+                                                color: ksecondaryColor,
+                                                fontSize: 19)),
+                                        TextSpan(
+                                            text: '${_productPrice[index]}',
+                                            style: TextStyle(
+                                                color: kwhiteCOlor,
+                                                fontSize: 19)),
+                                      ]),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        width: 20,
+                      );
+                    },
+                    itemCount: _productPrice.length),
               ),
             )
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        iconSize: 30,
+        selectedItemColor: kprimaryColor,
+        items: const [
+          BottomNavigationBarItem(
+            label: '',
+            icon: Icon(
+              Icons.explore,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: '',
+            icon: Icon(
+              Icons.bookmark,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: '',
+            icon: Icon(
+              Icons.refresh,
+            ),
+          ),
+          BottomNavigationBarItem(
+            label: '',
+            icon: Icon(
+              Icons.notifications_active,
+            ),
+          ),
+        ],
       ),
     );
   }
